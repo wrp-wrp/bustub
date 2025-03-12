@@ -323,13 +323,12 @@ class Trie {
       *child_ptr = std::move(convert_node);
       latch_.WUnlock();
       return true;
-    } 
+    }
     auto new_node = std::make_unique<TrieNodeWithValue<T>>(ch, value);
     current->InsertChildNode(ch, std::move(new_node));
     latch_.WUnlock();
     return true;
   }
-
   /**
    *
    * @brief Remove key value pair from the trie.
@@ -367,7 +366,7 @@ class Trie {
     }
     current->SetEndNode(false);
     if (!current->HasChildren()) {
-      for (size_t i = path.size() - 1; i >= 0; i--) {
+      for (int i = static_cast<int>(path.size()) - 1; i >= 0; i--) {
         char ch = path[i].first;
         current = path[i].second;
         current->RemoveChildNode(ch);
